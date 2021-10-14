@@ -6,8 +6,19 @@
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
+      <parameter>
+        <name>postgresHost</name>
+        <default_value>pentaho</default_value>
+        <description/>
+      </parameter>
+      <parameter>
+        <name>sourceDir</name>
+        <default_value>apb/sources</default_value>
+        <description/>
+      </parameter>
     </parameters>
     <log>
       <trans-log-table>
@@ -437,7 +448,7 @@
   </notepads>
   <connection>
     <name>Pentaho-dw</name>
-    <server>pentaho</server>
+    <server>${postgresHost}</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
     <database>postgres</database>
@@ -504,7 +515,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>${baseDir}/ChanHier.csv</filename>
+    <filename>${sourceDir}/ChanHier.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>

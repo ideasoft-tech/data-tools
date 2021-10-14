@@ -6,8 +6,19 @@
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
+      <parameter>
+        <name>postgresHost</name>
+        <default_value>pentaho</default_value>
+        <description/>
+      </parameter>
+      <parameter>
+        <name>sourceDir</name>
+        <default_value>apb/sources</default_value>
+        <description/>
+      </parameter>
     </parameters>
     <log>
       <trans-log-table>
@@ -430,14 +441,14 @@
     <created_date>2021/10/14 15:49:15.853</created_date>
     <modified_user>-</modified_user>
     <modified_date>2021/10/14 15:49:15.853</modified_date>
-    <key_for_session_key/>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
   <connection>
     <name>Pentaho-dw</name>
-    <server>pentaho</server>
+    <server>${postgresHost}</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
     <database>postgres</database>
@@ -504,7 +515,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>${baseDir}/ProdHier.csv</filename>
+    <filename>${sourceDir}/ProdHier.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>

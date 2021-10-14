@@ -304,7 +304,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>96</xloc>
+      <xloc>32</xloc>
       <yloc>112</yloc>
       <attributes_kjc/>
     </entry>
@@ -330,7 +330,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${jobDir}/TimeHier.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}/TimeHier.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -354,6 +354,16 @@
       <suppress_result_data>N</suppress_result_data>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>postgresHost</name>
+          <stream_name/>
+          <value>${postgresHost}</value>
+        </parameter>
+        <parameter>
+          <name>sourceDir</name>
+          <stream_name/>
+          <value>${sourceDir}</value>
+        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
@@ -369,7 +379,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${jobDir}/ProdHier.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}/ProdHier.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -408,7 +418,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${jobDir}/CustHier.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}/CustHier.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -432,6 +442,16 @@
       <suppress_result_data>N</suppress_result_data>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>postgresHost</name>
+          <stream_name/>
+          <value>${postgresHost}</value>
+        </parameter>
+        <parameter>
+          <name>sourceDir</name>
+          <stream_name/>
+          <value>${sourceDir}</value>
+        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
@@ -447,7 +467,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${jobDir}/ChanHier.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}/ChanHier.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -471,6 +491,16 @@
       <suppress_result_data>N</suppress_result_data>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>postgresHost</name>
+          <stream_name/>
+          <value>${postgresHost}</value>
+        </parameter>
+        <parameter>
+          <name>sourceDir</name>
+          <stream_name/>
+          <value>${sourceDir}</value>
+        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
@@ -498,7 +528,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${jobDir}/HistSaleLvl0.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}/HistSaleLvl0.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -522,6 +552,16 @@
       <suppress_result_data>N</suppress_result_data>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>postgresHost</name>
+          <stream_name/>
+          <value>${postgresHost}</value>
+        </parameter>
+        <parameter>
+          <name>sourceDir</name>
+          <stream_name/>
+          <value>${sourceDir}</value>
+        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
@@ -530,17 +570,25 @@
       <yloc>128</yloc>
       <attributes_kjc/>
     </entry>
+    <entry>
+      <name>Set variables</name>
+      <description/>
+      <type>SET_VARIABLES</type>
+      <attributes/>
+      <replacevars>Y</replacevars>
+      <filename>${Internal.Job.Filename.Directory}/config.ini</filename>
+      <file_variable_type>JVM</file_variable_type>
+      <fields>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>144</xloc>
+      <yloc>48</yloc>
+      <attributes_kjc/>
+    </entry>
   </entries>
   <hops>
-    <hop>
-      <from>Start</from>
-      <to>Checks if files exist</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
     <hop>
       <from>Checks if files exist</from>
       <to>Time Hierarchy</to>
@@ -594,6 +642,24 @@
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Set variables</from>
+      <to>Checks if files exist</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Start</from>
+      <to>Set variables</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
     </hop>
   </hops>
   <notepads>
