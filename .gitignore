@@ -1,3 +1,8 @@
+
+# Pantaho PDI config
+pentaho/pdi/config.ini
+
+
 # Compiled class file
 *.class
 
