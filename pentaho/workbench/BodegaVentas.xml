@@ -1,0 +1,79 @@
+<Schema name="New Schema1">
+  <Cube name="BodegaVentas" visible="true" cache="true" enabled="true">
+    <Table name="vinos_ventas" schema="public">
+    </Table>
+    <Dimension type="StandardDimension" visible="true" foreignKey="clientecod" highCardinality="false" name="Clientes">
+      <Hierarchy name="Clientes" visible="true" hasAll="true">
+        <Table name="vinos_clientes" schema="public">
+        </Table>
+        <Level name="TipoCuenta" visible="true" table="vinos_clientes" column="tipocuenta" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Cliente" visible="true" table="vinos_clientes" column="clientecod" nameColumn="cliente" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="vendedorcod" highCardinality="false" name="Vendedores">
+      <Hierarchy name="Vendedores" visible="true" hasAll="true">
+        <Table name="vinos_vendedores" schema="public">
+        </Table>
+        <Level name="Canal" visible="true" table="vinos_vendedores" column="equipo" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Vendedor" visible="true" table="vinos_vendedores" column="vendedorcod" nameColumn="vendedor" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="destinocod" highCardinality="false" name="Destinos">
+      <Hierarchy name="Destinos" visible="true" hasAll="true">
+        <Table name="vinos_destinos" schema="public">
+        </Table>
+        <Level name="Region" visible="true" table="vinos_destinos" column="region" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Pais" visible="true" table="vinos_destinos" column="pais" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Ciudad" visible="true" table="vinos_destinos" column="destinocod" nameColumn="ciudad" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="vinocod" highCardinality="false" name="Productos">
+      <Hierarchy name="Productos" visible="true" hasAll="true">
+        <Table name="vinos_vinos" schema="public">
+        </Table>
+        <Level name="Tipo de Producto" visible="true" table="vinos_vinos" column="vinotipoproducto" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+        <Level name="Producto" visible="true" table="vinos_vinos" column="vinocod" nameColumn="vinomarca" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="vinocod" highCardinality="false" name="Tipos de Vino">
+      <Hierarchy name="Tipos de Vino" visible="true" hasAll="true">
+        <Table name="vinos_vinos" schema="public">
+        </Table>
+        <Level name="Tipo de Vino" visible="true" table="vinos_vinos" column="vinocolor" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="TimeDimension" visible="true" foreignKey="fecha" highCardinality="false" name="Fecha">
+      <Hierarchy name="Fecha" visible="true" hasAll="true">
+        <View alias="fechas_vinos">
+          <SQL dialect="generic">
+            <![CDATA[SELECT fecha, date_part('year', fecha) AS year, date_part('month', fecha) AS month, date_part('day', fecha) AS day from vinos_ventas]]>
+          </SQL>
+        </View>
+        <Level name="Year" visible="true" column="year" type="Integer" uniqueMembers="false" levelType="TimeYears" hideMemberIf="Never">
+        </Level>
+        <Level name="Mes" visible="true" column="month" type="Integer" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never">
+        </Level>
+        <Level name="Dia" visible="true" column="fecha" type="Integer" uniqueMembers="false" levelType="TimeDays" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Litros Vendidos" column="litros" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="VentaBruta" column="montobruto" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Descuentos" column="descuento" aggregator="sum" visible="true">
+    </Measure>
+    <CalculatedMember name="VentaNeta" formula="VentaBruta - Descuentos" dimension="Measures" visible="true">
+    </CalculatedMember>
+  </Cube>
+</Schema>
