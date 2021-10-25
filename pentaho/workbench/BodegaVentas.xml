@@ -1,4 +1,4 @@
-<Schema name="New Schema1">
+<Schema name="Bodegas">
   <Cube name="BodegaVentas" visible="true" cache="true" enabled="true">
     <Table name="vinos_ventas" schema="public">
     </Table>
@@ -63,7 +63,7 @@
         </Level>
         <Level name="Mes" visible="true" column="month" type="Integer" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never">
         </Level>
-        <Level name="Dia" visible="true" column="fecha" type="Integer" uniqueMembers="false" levelType="TimeDays" hideMemberIf="Never">
+        <Level name="Dia" visible="true" column="fecha" type="Date" uniqueMembers="false" levelType="TimeDays" hideMemberIf="Never">
         </Level>
       </Hierarchy>
     </Dimension>
@@ -73,7 +73,7 @@
     </Measure>
     <Measure name="Descuentos" column="descuento" aggregator="sum" visible="true">
     </Measure>
-    <CalculatedMember name="VentaNeta" formula="VentaBruta - Descuentos" dimension="Measures" visible="true">
+    <CalculatedMember name="VentaNeta" formula="[Measures].[VentaBruta] - [Measures].[Descuentos]" dimension="Measures" visible="true">
     </CalculatedMember>
   </Cube>
 </Schema>
