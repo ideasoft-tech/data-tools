@@ -1,0 +1,135 @@
+<Schema name="APB">
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="PRODUCT">
+    <Hierarchy name="product" visible="true" hasAll="true" allMemberName="All products" primaryKey="code">
+      <Table name="product_hierarchy" schema="public">
+      </Table>
+      <Level name="group" visible="true" column="grupo" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="class" visible="true" column="class" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="product" visible="true" column="code" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+    <Hierarchy name="productFull" visible="true" hasAll="true" allMemberName="All products full" primaryKey="code">
+      <Table name="product_hierarchy" schema="public">
+      </Table>
+      <Level name="divison" visible="true" column="division" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="line" visible="true" column="line" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="family" visible="true" column="family" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="group" visible="true" column="grupo" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="class" visible="true" column="class" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="code" visible="true" column="code" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="CUSTOMERS">
+    <Hierarchy name="customer" visible="true" hasAll="true" primaryKey="store">
+      <Table name="customer_hierarchy" schema="public">
+      </Table>
+      <Level name="retail" visible="true" column="retailer" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+      <Level name="store" visible="true" column="store" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Channel">
+    <Hierarchy name="Channel" visible="true" hasAll="true">
+      <Table name="channel_hierarchy" schema="public">
+      </Table>
+      <Level name="Channel" visible="true" table="channel_hierarchy" column="base" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" highCardinality="false" name="Scenario">
+    <Hierarchy name="Scenario" visible="true" hasAll="true">
+      <InlineTable alias="Scenarios">
+        <ColumnDefs>
+          <ColumnDef name="scenario" type="String">
+          </ColumnDef>
+        </ColumnDefs>
+        <Rows>
+          <Row>
+            <Value column="scenario">
+              <![CDATA[Actual]]>
+            </Value>
+          </Row>
+          <Row>
+            <Value column="scenario">
+              <![CDATA[Budget]]>
+            </Value>
+          </Row>
+          <Row>
+            <Value column="scenario">
+              <![CDATA[Forecast]]>
+            </Value>
+          </Row>
+        </Rows>
+      </InlineTable>
+      <Level name="Scenario" visible="true" column="scenario" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="TimeDimension" visible="true" highCardinality="false" name="TIME">
+    <Hierarchy name="time" visible="true" hasAll="false" primaryKey="datekey">
+      <Table name="time_hierarchy" schema="public">
+      </Table>
+      <Level name="year" visible="true" column="year" type="Integer" uniqueMembers="false" levelType="TimeYears" hideMemberIf="Never">
+      </Level>
+      <Level name="Quarter" visible="true" column="quarter" type="String" uniqueMembers="false" levelType="TimeQuarters" hideMemberIf="Never">
+      </Level>
+      <Level name="Month" visible="true" column="datekey" nameColumn="month" type="Integer" uniqueMembers="true" levelType="TimeMonths" hideMemberIf="Never">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="HistSales" visible="true" cache="true" enabled="true">
+    <Table name="hist_sale_level0" schema="public">
+    </Table>
+    <DimensionUsage source="PRODUCT" name="PRODUCT" visible="true" foreignKey="code" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="CUSTOMERS" name="CUSTOMERS" visible="true" foreignKey="store" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Channel" name="Channel" visible="true" foreignKey="base" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="TIME" name="TIME" visible="true" foreignKey="datekey" highCardinality="false">
+    </DimensionUsage>
+    <Measure name="DollarSales" column="dollarsales" datatype="Numeric" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="units" column="actunit" datatype="Numeric" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+  <Cube name="ProdCost" visible="true" cache="true" enabled="true">
+    <Table name="prod_cost" schema="public">
+    </Table>
+    <DimensionUsage source="PRODUCT" name="PRODUCT" visible="true" foreignKey="product_code" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="Scenario" name="Scenario" visible="true" foreignKey="scenario" highCardinality="false">
+    </DimensionUsage>
+    <DimensionUsage source="TIME" name="TIME" visible="true" foreignKey="datekey" highCardinality="false">
+    </DimensionUsage>
+    <Measure name="Cost" column="standardproductcost" datatype="Numeric" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+  <VirtualCube enabled="true" name="APBFull">
+    <VirtualCubeDimension name="PRODUCT">
+    </VirtualCubeDimension>
+    <VirtualCubeDimension name="CUSTOMERS">
+    </VirtualCubeDimension>
+    <VirtualCubeDimension name="Channel">
+    </VirtualCubeDimension>
+    <VirtualCubeDimension name="Scenario">
+    </VirtualCubeDimension>
+    <VirtualCubeDimension name="TIME">
+    </VirtualCubeDimension>
+    <VirtualCubeMeasure cubeName="HistSales" name="[Measures].[DollarSales]" visible="true">
+    </VirtualCubeMeasure>
+    <VirtualCubeMeasure cubeName="HistSales" name="[Measures].[units]" visible="true">
+    </VirtualCubeMeasure>
+    <VirtualCubeMeasure cubeName="ProdCost" name="[Measures].[Cost]" visible="true">
+    </VirtualCubeMeasure>
+  </VirtualCube>
+</Schema>
