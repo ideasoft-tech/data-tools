@@ -1,16 +1,6 @@
 <Schema name="APB">
   <Dimension type="StandardDimension" visible="true" highCardinality="false" name="PRODUCT">
-    <Hierarchy name="product" visible="true" hasAll="true" allMemberName="All products" primaryKey="code">
-      <Table name="product_hierarchy" schema="public">
-      </Table>
-      <Level name="group" visible="true" column="grupo" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
-      </Level>
-      <Level name="class" visible="true" column="class" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
-      </Level>
-      <Level name="product" visible="true" column="code" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
-      </Level>
-    </Hierarchy>
-    <Hierarchy name="productFull" visible="true" hasAll="true" allMemberName="All products full" primaryKey="code">
+    <Hierarchy name="product" visible="true" hasAll="true" allMemberName="All products full" primaryKey="code">
       <Table name="product_hierarchy" schema="public">
       </Table>
       <Level name="divison" visible="true" column="division" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
@@ -23,7 +13,7 @@
       </Level>
       <Level name="class" visible="true" column="class" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
-      <Level name="code" visible="true" column="code" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      <Level name="code" visible="true" column="code" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
       </Level>
     </Hierarchy>
   </Dimension>
@@ -75,14 +65,14 @@
     </Hierarchy>
   </Dimension>
   <Dimension type="TimeDimension" visible="true" highCardinality="false" name="TIME">
-    <Hierarchy name="time" visible="true" hasAll="false" primaryKey="datekey">
+    <Hierarchy name="time" visible="true" hasAll="false" primaryKey="date">
       <Table name="time_hierarchy" schema="public">
       </Table>
       <Level name="year" visible="true" column="year" type="Integer" uniqueMembers="false" levelType="TimeYears" hideMemberIf="Never">
       </Level>
       <Level name="Quarter" visible="true" column="quarter" type="String" uniqueMembers="false" levelType="TimeQuarters" hideMemberIf="Never">
       </Level>
-      <Level name="Month" visible="true" column="datekey" nameColumn="month" type="Integer" uniqueMembers="true" levelType="TimeMonths" hideMemberIf="Never">
+      <Level name="Month" visible="true" column="date" nameColumn="month" type="Integer" uniqueMembers="true" levelType="TimeMonths" hideMemberIf="Never">
       </Level>
     </Hierarchy>
   </Dimension>
@@ -95,7 +85,7 @@
     </DimensionUsage>
     <DimensionUsage source="Channel" name="Channel" visible="true" foreignKey="base" highCardinality="false">
     </DimensionUsage>
-    <DimensionUsage source="TIME" name="TIME" visible="true" foreignKey="datekey" highCardinality="false">
+    <DimensionUsage source="TIME" name="TIME" visible="true" foreignKey="date" highCardinality="false">
     </DimensionUsage>
     <Measure name="DollarSales" column="dollarsales" datatype="Numeric" aggregator="sum" visible="true">
     </Measure>
@@ -109,21 +99,21 @@
     </DimensionUsage>
     <DimensionUsage source="Scenario" name="Scenario" visible="true" foreignKey="scenario" highCardinality="false">
     </DimensionUsage>
-    <DimensionUsage source="TIME" name="TIME" visible="true" foreignKey="datekey" highCardinality="false">
+    <DimensionUsage source="TIME" name="TIME" visible="true" foreignKey="date" highCardinality="false">
     </DimensionUsage>
     <Measure name="Cost" column="standardproductcost" datatype="Numeric" aggregator="sum" visible="true">
     </Measure>
   </Cube>
-  <VirtualCube enabled="true" name="APBFull">
-    <VirtualCubeDimension name="PRODUCT">
+  <VirtualCube enabled="true" name="APBFull" visible="true">
+    <VirtualCubeDimension visible="true" highCardinality="false" name="PRODUCT">
     </VirtualCubeDimension>
-    <VirtualCubeDimension name="CUSTOMERS">
+    <VirtualCubeDimension visible="true" highCardinality="false" name="CUSTOMERS">
     </VirtualCubeDimension>
-    <VirtualCubeDimension name="Channel">
+    <VirtualCubeDimension visible="true" highCardinality="false" name="Channel">
     </VirtualCubeDimension>
-    <VirtualCubeDimension name="Scenario">
+    <VirtualCubeDimension visible="true" highCardinality="false" name="Scenario">
     </VirtualCubeDimension>
-    <VirtualCubeDimension name="TIME">
+    <VirtualCubeDimension visible="true" highCardinality="false" name="TIME">
     </VirtualCubeDimension>
     <VirtualCubeMeasure cubeName="HistSales" name="[Measures].[DollarSales]" visible="true">
     </VirtualCubeMeasure>

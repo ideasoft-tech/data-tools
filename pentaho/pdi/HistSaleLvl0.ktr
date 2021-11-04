@@ -582,7 +582,7 @@
         <group>,</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>Month</name>
@@ -593,7 +593,7 @@
         <group>,</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>ActUnit</name>
@@ -640,86 +640,6 @@
     <GUI>
       <xloc>80</xloc>
       <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Table output</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>Pentaho-dw</connection>
-    <schema>public</schema>
-    <table>hist_sale_level0</table>
-    <commit>1000</commit>
-    <truncate>Y</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-      <field>
-        <column_name>Store</column_name>
-        <stream_name>Store</stream_name>
-      </field>
-      <field>
-        <column_name>Code</column_name>
-        <stream_name>Code</stream_name>
-      </field>
-      <field>
-        <column_name>Base</column_name>
-        <stream_name>Base</stream_name>
-      </field>
-      <field>
-        <column_name>Year</column_name>
-        <stream_name>Year</stream_name>
-      </field>
-      <field>
-        <column_name>Month</column_name>
-        <stream_name>monthInt</stream_name>
-      </field>
-      <field>
-        <column_name>ActUnit</column_name>
-        <stream_name>ActUnit</stream_name>
-      </field>
-      <field>
-        <column_name>DollarSales</column_name>
-        <stream_name>DollarSales</stream_name>
-      </field>
-      <field>
-        <column_name>Risk</column_name>
-        <stream_name>Risk</stream_name>
-      </field>
-      <field>
-        <column_name>dateKey</column_name>
-        <stream_name>dateKey</stream_name>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>576</xloc>
-      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -839,6 +759,23 @@
         <currency_symbol/>
         <storage_type/>
       </meta>
+      <meta>
+        <name>datekey</name>
+        <rename>date</rename>
+        <type>Date</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask>YYYY-MM</conversion_mask>
+        <date_format_lenient>true</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -851,6 +788,86 @@
     <GUI>
       <xloc>460</xloc>
       <yloc>69</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Table output</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>Pentaho-dw</connection>
+    <schema>public</schema>
+    <table>hist_sale_level0</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>Store</column_name>
+        <stream_name>Store</stream_name>
+      </field>
+      <field>
+        <column_name>Code</column_name>
+        <stream_name>Code</stream_name>
+      </field>
+      <field>
+        <column_name>Base</column_name>
+        <stream_name>Base</stream_name>
+      </field>
+      <field>
+        <column_name>Year</column_name>
+        <stream_name>Year</stream_name>
+      </field>
+      <field>
+        <column_name>Month</column_name>
+        <stream_name>monthInt</stream_name>
+      </field>
+      <field>
+        <column_name>ActUnit</column_name>
+        <stream_name>ActUnit</stream_name>
+      </field>
+      <field>
+        <column_name>DollarSales</column_name>
+        <stream_name>DollarSales</stream_name>
+      </field>
+      <field>
+        <column_name>Risk</column_name>
+        <stream_name>Risk</stream_name>
+      </field>
+      <field>
+        <column_name>date</column_name>
+        <stream_name>date</stream_name>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>576</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
