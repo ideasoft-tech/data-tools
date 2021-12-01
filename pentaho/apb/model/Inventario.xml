@@ -1,0 +1,38 @@
+<Schema name="Inventario">
+  <Cube name="Inventario" visible="true" cache="true" enabled="true">
+    <Table name="hist_inv" schema="public">
+    </Table>
+    <Dimension type="TimeDimension" visible="true" foreignKey="date" highCardinality="false" name="Time">
+      <Hierarchy name="Time" visible="true" hasAll="true" primaryKey="date">
+        <Table name="time_hierarchy" schema="public">
+        </Table>
+        <Level name="Year" visible="true" column="year" type="Numeric" uniqueMembers="false" levelType="TimeYears" hideMemberIf="Never">
+        </Level>
+        <Level name="Quarter" visible="true" column="quarter" type="String" uniqueMembers="false" levelType="TimeQuarters" hideMemberIf="Never">
+        </Level>
+        <Level name="Month" visible="true" column="month" type="String" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never">
+        </Level>
+        <Level name="Day" visible="true" column="day" type="String" uniqueMembers="false" levelType="TimeDays" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="code" highCardinality="false" name="Product">
+      <Hierarchy name="Product" visible="true" hasAll="true">
+        <Table name="product_hierarchy" schema="public">
+        </Table>
+        <Level name="Code" visible="true" column="code" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="Stock" column="invunit" aggregator="sum" visible="true">
+    </Measure>
+    <CalculatedMember name="StockIni" formula="(OPENINGPERIOD([Time].[Day]), [Measures].[Stock])" dimension="Measures" visible="true">
+    </CalculatedMember>
+    <CalculatedMember name="StockMesIni" formula="(OPENINGPERIOD([Time].[Month]), [Measures].[Stock])" dimension="Measures" visible="true">
+    </CalculatedMember>
+    <CalculatedMember name="StockMesFinal" formula="(CLOSINGPERIOD([Time].[Month]), [Measures].[Stock])" dimension="Measures" visible="true">
+    </CalculatedMember>
+    <CalculatedMember name="StockPrevio" formatString="" formula="COALESCEEMPTY(([Measures].[Stock], [Time].PREVMEMBER),    [Measures].[Stock])" dimension="Measures" visible="true">
+    </CalculatedMember>
+  </Cube>
+</Schema>

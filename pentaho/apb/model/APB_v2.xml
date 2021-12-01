@@ -68,11 +68,11 @@
     <Hierarchy name="time" visible="true" hasAll="false" primaryKey="date">
       <Table name="time_hierarchy" schema="public">
       </Table>
-      <Level name="year" visible="true" column="year" type="Integer" uniqueMembers="false" levelType="TimeYears" hideMemberIf="Never">
+      <Level name="year" visible="true" column="year" type="Numeric" uniqueMembers="false" levelType="TimeYears" hideMemberIf="Never">
       </Level>
       <Level name="Quarter" visible="true" column="quarter" type="String" uniqueMembers="false" levelType="TimeQuarters" hideMemberIf="Never">
       </Level>
-      <Level name="Month" visible="true" column="date" nameColumn="month" type="Integer" uniqueMembers="true" levelType="TimeMonths" hideMemberIf="Never">
+      <Level name="Month" visible="true" column="date" ordinalColumn="month" type="Integer" uniqueMembers="true" levelType="TimeMonths" hideMemberIf="Never">
       </Level>
     </Hierarchy>
   </Dimension>
@@ -115,6 +115,8 @@
     </DimensionUsage>
     <Measure name="stock" column="invunit" aggregator="sum" visible="true">
     </Measure>
+    <CalculatedMember name="SubStock" formatString="#,##0" formula="(OPENINGPERIOD([TIME.time].[Month]), [Measures].[stock])" dimension="Measures" visible="true">
+    </CalculatedMember>
   </Cube>
   <Cube name="Shipping Cost" visible="true" cache="true" enabled="true">
     <Table name="ship_cost" schema="public">
